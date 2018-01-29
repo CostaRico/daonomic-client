@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
-// import formatDate from '~/i18n/format-date';
+import formatDate from '~/i18n/format-date';
 import TwoColumnsLayout from '~/components/two-columns-layout';
 import Panel from '@daonomic/ui/source/panel';
 import SaleTimeline from '~/components/sale-timeline';
@@ -58,16 +58,21 @@ class BuyTokens extends Component {
 	);
 
 	renderNotStartedSaleContent = () => {
-		// const { startTimestamp } = this.props.sale;
+		const {startTimestamp} = this.props.sale;
 
 		return (
 			<Panel paddingSize="large">
 				<Heading tagName="h1" className={styles.placeholder}>
-					Sale starts 30.01.2018 at 11:00 AM
+					The Private Sale starts on January 30th at 8 AM GMT.
 				</Heading>
 
-				<p>You will receive bla bla bla</p>
-				<p>You will receive bla bla bla</p>
+				<p>The Private Sale starts on January 30th at 8 AM GMT.</p>
+				<br />
+				<p>The minimum contribution during Private Sale <br />(January 30th and 31st) is 1 ETH.<br /> And all
+					Private Sale participants get the 40% bonus.</p>
+				<br />
+				<p>The ET4 token price is fixed at 0.001 ETH.</p>
+
 			</Panel>
 		);
 	};
@@ -82,6 +87,7 @@ class BuyTokens extends Component {
 
 	renderContent = () => {
 		const {isLoaded, isStarted, isFinished} = this.props.sale;
+
 
 
 		if (!isLoaded) {
