@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import { inject, observer } from 'mobx-react';
-import formatDate from '~/i18n/format-date';
+import {inject, observer} from 'mobx-react';
+// import formatDate from '~/i18n/format-date';
 import TwoColumnsLayout from '~/components/two-columns-layout';
 import Panel from '@daonomic/ui/source/panel';
 import SaleTimeline from '~/components/sale-timeline';
@@ -13,106 +13,105 @@ import TokenPrice from './components/token-price';
 import Balance from './components/balance';
 import styles from './buy-tokens.css';
 
-@inject(({ sale, walletAddress }) => ({
-  sale,
-  isWalletSaved: walletAddress.isSaved,
+@inject(({sale, walletAddress}) => ({
+	sale,
+	isWalletSaved: walletAddress.isSaved,
 }))
 @observer
 class BuyTokens extends Component {
-  static propTypes = {
-    sale: PropTypes.shape({
-      isLoaded: PropTypes.bool.isRequired,
-      isStarted: PropTypes.bool.isRequired,
-      isFinished: PropTypes.bool.isRequired,
-      startTimestamp: PropTypes.number.isRequired,
-      endTimestamp: PropTypes.number.isRequired,
-    }).isRequired,
-    isWalletSaved: PropTypes.bool.isRequired,
-  };
+	static propTypes = {
+		sale: PropTypes.shape({
+			isLoaded: PropTypes.bool.isRequired,
+			isStarted: PropTypes.bool.isRequired,
+			isFinished: PropTypes.bool.isRequired,
+			startTimestamp: PropTypes.number.isRequired,
+			endTimestamp: PropTypes.number.isRequired,
+		}).isRequired,
+		isWalletSaved: PropTypes.bool.isRequired,
+	};
 
-  renderPaymentMethod = () => {
-    const { isWalletSaved } = this.props;
+	renderPaymentMethod = () => {
+		const {isWalletSaved} = this.props;
 
-    if (!isWalletSaved) {
-      return null;
-    }
+		if (!isWalletSaved) {
+			return null;
+		}
 
-    return (
-      <PaymentMethod />
-    );
-  };
+		return (
+			<PaymentMethod/>
+		);
+	};
 
-  renderPreloader = () => (
-    <Panel paddingSize="large">
-      <Heading tagName="h1" className={styles.placeholder}>
-        <Translation id="loading" />...
-      </Heading>
-    </Panel>
-  );
+	renderPreloader = () => (
+		<Panel paddingSize="large">
+			<Heading tagName="h1" className={styles.placeholder}>
+				<Translation id="loading"/>...
+			</Heading>
+		</Panel>
+	);
 
-  renderActiveSaleContent = () => (
-    <Fragment>
-      <EthereumWallet />
-      {this.renderPaymentMethod()}
-    </Fragment>
-  );
+	renderActiveSaleContent = () => (
+		<Fragment>
+			<EthereumWallet/>
+			{this.renderPaymentMethod()}
+		</Fragment>
+	);
 
-  renderNotStartedSaleContent = () => {
-    const { startTimestamp } = this.props.sale;
+	renderNotStartedSaleContent = () => {
+		// const { startTimestamp } = this.props.sale;
 
-    return (
-      <Panel paddingSize="large">
-        <Heading tagName="h1" className={styles.placeholder}>
-          <Translation
-            id="widgets:saleStarts"
-            data={{
-              date: formatDate(new Date(startTimestamp)),
-            }}
-          />
-        </Heading>
-      </Panel>
-    );
-  };
+		return (
+			<Panel paddingSize="large">
+				<Heading tagName="h1" className={styles.placeholder}>
+					Sale starts 30.01.2018 at 11:00 AM
+				</Heading>
 
-  renderFinishedSaleContent = () => (
-    <Panel paddingSize="large">
-      <Heading tagName="h1" className={styles.placeholder}>
-        <Translation id="widgets:saleFinished" />
-      </Heading>
-    </Panel>
-  );
+				<p>You will receive bla bla bla</p>
+				<p>You will receive bla bla bla</p>
+			</Panel>
+		);
+	};
 
-  renderContent = () => {
-    const { isLoaded, isStarted, isFinished } = this.props.sale;
+	renderFinishedSaleContent = () => (
+		<Panel paddingSize="large">
+			<Heading tagName="h1" className={styles.placeholder}>
+				<Translation id="widgets:saleFinished"/>
+			</Heading>
+		</Panel>
+	);
 
-    if (!isLoaded) {
-      return this.renderPreloader();
-    }
+	renderContent = () => {
+		const {isLoaded, isStarted, isFinished} = this.props.sale;
 
-    if (!isStarted) {
-      return this.renderNotStartedSaleContent();
-    }
 
-    if (isStarted && !isFinished) {
-      return this.renderActiveSaleContent();
-    }
+		if (!isLoaded) {
+			return this.renderPreloader();
+		}
 
-    return this.renderFinishedSaleContent();
-  };
+		if (!isStarted) {
+			return this.renderNotStartedSaleContent();
+		}
 
-  render = () => (
-    <TwoColumnsLayout>
-      <TwoColumnsLayout.Left>
-        {this.renderContent()}
-      </TwoColumnsLayout.Left>
+		if (isStarted && !isFinished) {
+			return this.renderActiveSaleContent();
+		}
 
-      <TwoColumnsLayout.Right>
-        <Balance />
-        <TokenPrice />
-        <SaleTimeline />
-      </TwoColumnsLayout.Right>
-    </TwoColumnsLayout>
-  );
+		return this.renderFinishedSaleContent();
+	};
+
+	render = () => (
+		<TwoColumnsLayout>
+			<TwoColumnsLayout.Left>
+				{this.renderContent()}
+			</TwoColumnsLayout.Left>
+
+			<TwoColumnsLayout.Right>
+				<Balance/>
+				<TokenPrice/>
+				<SaleTimeline/>
+			</TwoColumnsLayout.Right>
+		</TwoColumnsLayout>
+	);
 }
 
 export default BuyTokens;
