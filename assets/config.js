@@ -1,6 +1,6 @@
 window.config = Object.assign(window.config || {}, {
   realm: '5a2a67f222781cecae23200e',
-  sale: '0x99a09f0d85bc6e95e110348a8522f98443e31c4a',
+  sale: '0x83eba28e4047a4ec4df302bbaa28c0f88887c08c',
   common: {
     contactEmail: 'dev@0v1se.com',
     termsOfServiceURL: 'terms.url',
