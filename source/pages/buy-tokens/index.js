@@ -103,7 +103,7 @@ class BuyTokens extends Component {
 		}
 
 		// return this.renderFinishedSaleContent();
-		return this.renderNotStartedSaleContent();
+		return this.renderActiveSaleContent();
 	};
 
 	render = () => (

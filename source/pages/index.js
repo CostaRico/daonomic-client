@@ -48,7 +48,7 @@ export default {
 
     faq: {
       getPath: () => `${appPrefix}/faq`,
-      title: 'For Investors',
+      title: 'FAQ',
       component: Faq,
     },
   },
